@@ -179,7 +179,7 @@
             <h2 class="text-2xl sm:text-3xl font-bold mb-4">Contact Us</h2>
             <p class="mb-4 text-gray-300">Have a question? We'd love to hear from you.</p>
             <div class="space-y-1">
-                <p class="font-semibold">mybatik@mybatik.com</p>
+                <p class="font-semibold">support@mybatik.site</p>
                 <p>+62 21 1234 5678</p>
                 <p>Jalan Batik No. 10, Yogyakarta, Indonesia</p>
             </div>
