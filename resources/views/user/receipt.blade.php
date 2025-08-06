@@ -143,7 +143,7 @@
                     <h4 class="font-bold text-lg mb-4">Item Details</h4>
                     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         <div class="w-20 h-20 flex-shrink-0">
-                           <img src="{{ asset('storage/' . $order->desain) ? asset('storage/' . $order->desain) : 'https://placehold.co/1088x544' }}" alt="Batik Design" class="w-full h-full object-contain rounded-md">
+                           <img src="{{ asset('storage/app/public/' . $order->desain) ? asset('storage/app/public/' . $order->desain) : 'https://placehold.co/1088x544' }}" alt="Batik Design" class="w-full h-full object-contain rounded-md">
                         </div>
                         <div class="flex-grow">
                             <h5 class="font-semibold text-lg">Custom Batik Shirt</h5>
@@ -225,7 +225,7 @@
                             @endif
                         </p>
                         
-                        <div x-data="{ imageUrl: '{{ $order->bukti_pembayaran ? asset('storage/' . $order->bukti_pembayaran) : null }}' }">
+                        <div x-data="{ imageUrl: '{{ $order->bukti_pembayaran ? asset('storage/app/public/' . $order->bukti_pembayaran) : null }}' }">
                             <form action="{{ route('order.upload.proof', $order) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 
@@ -257,7 +257,7 @@
                         <h3 class="font-bold text-lg mb-4">Payment Proof Confirmed</h3>
                         <p class="text-sm text-gray-600 mb-4">Thank you! Your payment has been verified and your order is being processed.</p>
                         <div class="mt-4">
-                            <img src="{{ asset('storage/' . $order->bukti_pembayaran) }}" alt="Payment Proof" class="w-full rounded-lg object-contain border">
+                            <img src="{{ asset('storage/app/public/' . $order->bukti_pembayaran) }}" alt="Payment Proof" class="w-full rounded-lg object-contain border">
                         </div>
 
                     @elseif($order->status == 'Cancelled')
