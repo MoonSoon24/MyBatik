@@ -65,17 +65,13 @@
             <div class="mt-12">{{ $designs->links() }}</div>
         @endif
 
-        {{-- Detail Modal --}}
         <div x-show="showDetailModal" @keydown.escape.window="showDetailModal = false" x-cloak class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-2 sm:p-4">
-            {{-- CHANGE: Modal now uses flex-col on mobile and flex-row on desktop --}}
             <div @click.away="showDetailModal = false" class="bg-white w-full max-w-5xl h-full max-h-[95vh] flex flex-col md:flex-row rounded-lg overflow-hidden">
 
-                {{-- Image Section --}}
                 <div class="w-full md:w-1/2 bg-gray-100 flex items-center justify-center p-2 h-1/3 md:h-full">
-                    <img :src="'/storage/' + currentDesign.image_path" :alt="currentDesign.title" class="max-w-full max-h-full object-contain">
+                    <img :src="'storage/app/public/' + currentDesign.image_path" :alt="currentDesign.title" class="max-w-full max-h-full object-contain">
                 </div>
 
-                {{-- Details and Comments Section --}}
                 <div class="w-full md:w-1/2 flex flex-col h-2/3 md:h-full">
                     <div class="p-4 border-b">
                         <div class="flex justify-between items-start">
