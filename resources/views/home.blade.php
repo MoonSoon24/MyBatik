@@ -44,21 +44,21 @@
             <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10 sm:mb-12">How It Works</h2>
             <div class="flex flex-col md:flex-row justify-around items-center gap-10 md:gap-8">
                 <div class="text-center flex flex-col items-center">
-                    <img src="{{ asset('public/images/home_1.png') }}" alt="A blue shirt representing design creation" class="h-48 sm:h-56 md:h-64 w-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/256x256';">
+                    <img src="{{ asset('images/home_1.png') }}" alt="A blue shirt representing design creation" class="h-48 sm:h-56 md:h-64 w-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/256x256';">
                     <p class="font-semibold text-lg">1. Create your design!</p>
                 </div>
                 
                 <div class="text-4xl text-blue-500 font-light transform rotate-90 md:rotate-0">&rarr;</div>
                 
                 <div class="text-center flex flex-col items-center">
-                    <img src="{{ asset('public/images/home_2.png') }}" alt="A hand choosing a size" class="h-48 sm:h-56 md:h-64 w-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/256x256';">
+                    <img src="{{ asset('images/home_2.png') }}" alt="A hand choosing a size" class="h-48 sm:h-56 md:h-64 w-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/256x256';">
                     <p class="font-semibold text-lg">2. Choose your size</p>
                 </div>
 
                 <div class="text-4xl text-blue-500 font-light transform rotate-90 md:rotate-0">&rarr;</div>
                 
                 <div class="text-center flex flex-col items-center">
-                    <img src="{{ asset('public/images/home_3.png') }}" alt="A person working on a sewing pattern" class="h-48 sm:h-56 md:h-64 w-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/256x256';">
+                    <img src="{{ asset('images/home_3.png') }}" alt="A person working on a sewing pattern" class="h-48 sm:h-56 md:h-64 w-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/256x256';">
                     <p class="font-semibold text-lg">3. Let us do the work!</p>
                 </div>
             </div>
