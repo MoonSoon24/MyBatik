@@ -275,7 +275,7 @@
             },
 
             downloadImage() {
-                fetch('/storage/' + this.currentDesign.image_path)
+                fetch('storage/app/public' + this.currentDesign.image_path)
                     .then(response => response.blob())
                     .then(blob => {
                         const url = window.URL.createObjectURL(blob);

@@ -78,7 +78,7 @@
                                 ))) }}">{{ $riwayat->order->status }}</h2>
                                 <div class="flex items-start ">
                                     <div class="w-20 h-20 flex-shrink-0">
-                                        <img src="{{ isset($riwayat->order->desain) ? asset('storage/' . $riwayat->order->desain) : 'https://placehold.co/1088x544' }}" alt="Batik Design" class="w-full h-full object-contain rounded-md">
+                                        <img src="{{ isset($riwayat->order->desain) ? asset('storage/app/public/' . $riwayat->order->desain) : 'https://placehold.co/1088x544' }}" alt="Batik Design" class="w-full h-full object-contain rounded-md">
                                     </div>
                                     <div class="w-full pl-4">
                                         <h3 class="font-semibold text-lg">Custom Batik</h3>

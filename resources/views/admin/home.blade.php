@@ -268,7 +268,7 @@
                                     <div x-show="selectedOrder.desain">
                                         <label class="block text-sm font-semibold text-gray-900">Design Picture:</label>
                                         <div class="mt-2 p-2 border border-gray-200 rounded-lg bg-gray-50 h-full flex items-center justify-center">
-                                            <img :src="'/storage/' + selectedOrder.desain" alt="Batik Design" class="w-full h-auto rounded-md object-contain max-h-[450px]" crossorigin="anonymous">
+                                            <img :src="'storage/app/public/' + selectedOrder.desain" alt="Batik Design" class="w-full h-auto rounded-md object-contain max-h-[450px]" crossorigin="anonymous">
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +300,7 @@
                             <button 
                                 x-show="selectedOrder.bukti_pembayaran"
                                 type="button" 
-                                @click="$dispatch('open-proof-modal', { imageUrl: '/storage/' + selectedOrder.bukti_pembayaran })"
+                                @click="$dispatch('open-proof-modal', { imageUrl: 'storage/app/public/' + selectedOrder.bukti_pembayaran })"
                                 class="px-4 py-2 bg-indigo-500 text-white rounded-lg font-semibold hover:bg-indigo-600 transition-colors text-sm">
                                 View Payment
                             </button>
