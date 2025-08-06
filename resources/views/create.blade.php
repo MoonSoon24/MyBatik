@@ -246,9 +246,9 @@
                 <div class="max-h-64 overflow-y-auto p-3 border border-gray-200 rounded-lg">
                     <h4 class="text-md font-medium text-gray-600 mb-2">Default Motifs</h4>
                     <div class="grid grid-cols-3 gap-4" id="default-motifs-container">
-                        <img src="images/batik1.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Motif 1" data-type="motif">
-                        <img src="images/batik2.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Motif 2" data-type="motif">
-                        <img src="images/batik3.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Motif 3" data-type="motif">
+                        <img src="public/images/batik1.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Motif 1" data-type="motif">
+                        <img src="public/images/batik2.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Motif 2" data-type="motif">
+                        <img src="public/images/batik3.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Motif 3" data-type="motif">
                     </div>
                     <h4 class="text-md font-medium text-gray-600 mt-4 mb-2">Custom Motifs</h4>
                     <div id="custom-motifs-container" class="grid grid-cols-3 gap-4"></div>
@@ -266,9 +266,9 @@
                 <div class="max-h-64 overflow-y-auto p-3 border border-gray-200 rounded-lg">
                     <h4 class="text-md font-medium text-gray-600 mb-2">Default Textures</h4>
                     <div class="grid grid-cols-3 gap-4" id="default-textures-container">
-                        <img src="images/texture1.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Texture 1" data-type="texture">
-                        <img src="images/texture2.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Texture 2" data-type="texture">
-                        <img src="images/texture3.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Texture 3" data-type="texture">
+                        <img src="public/images/texture1.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Texture 1" data-type="texture">
+                        <img src="public/images/texture2.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Texture 2" data-type="texture">
+                        <img src="public/images/texture3.png" class="motif-item rounded-lg cursor-pointer border-2 border-transparent" alt="Batik Texture 3" data-type="texture">
                     </div>
                     <h4 class="text-md font-medium text-gray-600 mt-4 mb-2">Custom Textures</h4>
                     <div id="custom-textures-container" class="grid grid-cols-3 gap-4"></div>
@@ -303,7 +303,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ... (all const declarations remain the same) ...
     const shirtBtn = document.getElementById('shirtBtn');
     const dressBtn = document.getElementById('dressBtn');
     const longSleeveBtn = document.getElementById('longSleeveBtn');
@@ -346,16 +345,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const imagePaths = {
         shirt: {
-            long: { front: { mask: 'images/custom_shirt_design.png', outline: 'images/shirt_outline.png' }, back: { mask: 'images/backshirt_long.png', outline: 'images/backshirt_long_outline.png' } },
-            short: { front: { mask: 'images/short_sleeve_shirt.png', outline: 'images/short_sleeve_shirt_outline.png' }, back: { mask: 'images/backshirt_short.png', outline: 'images/backshirt_short_outline.png' } }
+            long: { front: { mask: 'public/images/custom_shirt_design.png', outline: 'public/images/shirt_outline.png' }, back: { mask: 'public/images/backshirt_long.png', outline: 'public/images/backshirt_long_outline.png' } },
+            short: { front: { mask: 'public/images/short_sleeve_shirt.png', outline: 'public/images/short_sleeve_shirt_outline.png' }, back: { mask: 'public/images/backshirt_short.png', outline: 'public/images/backshirt_short_outline.png' } }
         },
         dress: {
-            long: { front: { mask: 'images/custom_dress_design.png', outline: 'images/dress_outline.png' }, back: { mask: 'images/backdress_long.png', outline: 'images/backdress_long_outline.png' } },
-            short: { front: { mask: 'images/short_sleeve_dress.png', outline: 'images/short_sleeve_dress_outline.png' }, back: { mask: 'images/backdress_short.png', outline: 'images/backdress_short_outline.png' } }
+            long: { front: { mask: 'public/images/custom_dress_design.png', outline: 'public/images/dress_outline.png' }, back: { mask: 'public/images/backdress_long.png', outline: 'public/images/backdress_long_outline.png' } },
+            short: { front: { mask: 'public/images/short_sleeve_dress.png', outline: 'public/images/short_sleeve_dress_outline.png' }, back: { mask: 'public/images/backdress_short.png', outline: 'public/images/backdress_short_outline.png' } }
         }
     };
 
-    // --- NEW: Helper function to get coordinates from mouse or touch events ---
     function getPointerCoordinates(e) {
         if (e.touches && e.touches.length) {
             return { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -394,7 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
         frontCanvas.style.backgroundColor = state.color;
         backCanvas.style.backgroundColor = state.color;
         
-        // --- MODIFIED: Add touch support when restoring elements ---
         document.querySelectorAll('.motif-image').forEach(element => {
             element.addEventListener('mousedown', onElementPointerDown);
             element.addEventListener('touchstart', onElementPointerDown);

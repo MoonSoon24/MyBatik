@@ -221,7 +221,7 @@ class OrderController extends Controller
         }
 
         $orderDetails = $request->session()->get('order_details');
-        $imageUrl = asset('public/storage/' . $orderDetails['desain']);
+        $imageUrl = asset('storage/app/public/' . $orderDetails['desain']);
         $basePrice = 300000;
         $promoDetails = $this->getPromoDetails($basePrice);
 
