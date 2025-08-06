@@ -72,12 +72,14 @@
         }
         .motif-canvas { 
             background-color: #ffffff; 
+            z-index: 1;
         }
         .garment-outline { 
             background-size: contain; 
             background-position: center; 
             background-repeat: no-repeat; 
             pointer-events: none; 
+            z-index: 10;
         }
         .motif-image { 
             position: absolute; 
@@ -438,7 +440,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (type === 'texture') {
             element = document.createElement('div');
             element.className = 'motif-image texture-element';
-            // MODIFIED: Added z-index: 1 for textures
             element.style.cssText = 'width: 30%; height: 30%; left: 20%; top: 20%; transform: rotate(0deg); z-index: 1;';
             element.style.backgroundImage = `url(${imageUrl})`;
             element.style.backgroundColor = clothColorInput.value;
@@ -448,12 +449,10 @@ document.addEventListener('DOMContentLoaded', () => {
             element.src = imageUrl;
             element.crossOrigin = "anonymous";
             element.className = 'motif-image';
-            // MODIFIED: Added z-index: 2 for motifs
             element.style.cssText = 'width: 30%; height: auto; left: 20%; top: 20%; transform: rotate(0deg); z-index: 2;';
         }
 
         activeMotifCanvas.appendChild(element);
-        // --- MODIFIED: Add touch support for new elements ---
         element.addEventListener('mousedown', onElementPointerDown);
         element.addEventListener('touchstart', onElementPointerDown);
         saveState();

@@ -107,7 +107,7 @@
                     <a href="/gallery" class="block group">
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-1">
                             <div class="h-56 sm:h-64 w-full bg-gray-50">
-                                <img src="{{ asset('storage/' . $post->image_path) }}" alt="{{ htmlspecialchars($post->title) }}" class="w-full h-full object-contain" onerror="this.onerror=null;this.src='https://placehold.co/400x400/eeeeee/222222?text=Batik';">
+                                <img src="{{ asset('storage/app/public/' . $post->image_path) }}" alt="{{ htmlspecialchars($post->title) }}" class="w-full h-full object-contain" onerror="this.onerror=null;this.src='https://placehold.co/400x400/eeeeee/222222?text=Batik';">
                             </div>
                             
                             <div class="p-6 flex flex-col flex-grow">

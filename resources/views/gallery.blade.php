@@ -46,7 +46,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4">
                 @foreach($designs as $design)
                 <div id="design-card-{{ $design->id }}" @click="openDetailModal({{ json_encode($design) }})" class="group relative aspect-square cursor-pointer bg-gray-200 rounded-md overflow-hidden">
-                    <img src="{{ asset('storage/app/public' . $design->image_path) }}" alt="{{ $design->title }}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/eeeeee/222222?text=Batik';">
+                    <img src="{{ asset('storage/app/public/' . $design->image_path) }}" alt="{{ $design->title }}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/eeeeee/222222?text=Batik';">
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
                         <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center space-x-6 text-white">
                             <div class="flex items-center space-x-2">
