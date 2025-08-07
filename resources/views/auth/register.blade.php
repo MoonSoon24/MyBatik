@@ -41,7 +41,7 @@
         <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 w-full max-w-md">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-900">Create Your Account</h2>
-                <p class="text-gray-500 mt-2">Join us to start Your</p>
+                <p class="text-gray-500 mt-2">Join us and start your journey to express your creativity. Design and wear a piece of tradition that is uniquely yours!</p>
             </div>
 
             <form action="/register" method="POST" class="space-y-6">
