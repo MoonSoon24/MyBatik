@@ -89,7 +89,7 @@
                     </div>
                 </div>
             @else
-                <a href="/login" class="hidden md:block font-semibold text-gray-700 hover:text-black transition">Sign In</a>
+                <a href="/login" class="font-semibold text-gray-700 hover:text-black transition">Sign In</a>
             @endguest
 
             <div class="md:hidden">
