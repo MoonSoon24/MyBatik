@@ -38,6 +38,11 @@ class AuthController extends Controller
                 'title' => 'Welcome to MyBatik!',
                 'message' => 'Thank you for registering. Special for our new members, enjoy a 10% discount on your purchase with the code WELCOME10.',
             ]);
+            Notification::create([
+            'user_id' => $user->id,
+            'title' => 'Verify Your Email Address',
+            'message' => 'Visit your profile to send a link for email verification.',
+        ]);
         }
 
         Auth::login($user);
