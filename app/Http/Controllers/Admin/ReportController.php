@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\GenerateStaticReportData;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Promo;
+use App\Models\Report;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -13,66 +15,14 @@ class ReportController extends Controller
 {
     public function index(request $request)
     {
-        $salesData = Order::select(
-            DB::raw('YEAR(created_at) as year'),
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('SUM(total) as total_sales'),
-            DB::raw('COUNT(*) as total_orders')
-        )
-        ->whereIn('status', ['In Progress','Ready', 'Completed'])
-        ->groupBy('year', 'month')
-        ->orderBy('year', 'desc')
-        ->orderBy('month', 'desc')
-        ->get();
+        $report = Report::first();
 
-        $promoReportData = [];
-        $allTimePromoUsage = DB::table('promos')
-            ->join('orders', 'promos.code', '=', 'orders.promo_code')
-            ->select('promos.code', 'promos.type', 'promos.value', DB::raw('count(orders.id_pesanan) as usage_count'))
-            ->whereNotNull('orders.promo_code')
-            ->whereIn('orders.status', ['In Progress','Ready', 'Completed'])
-            ->groupBy('promos.code', 'promos.type', 'promos.value')
-            ->orderBy('usage_count', 'desc')
-            ->get();
-        $promoReportData['all'] = $allTimePromoUsage;
-
-        $monthlyPromoUsage = DB::table('promos')
-            ->join('orders', 'promos.code', '=', 'orders.promo_code')
-            ->select(
-                'promos.code',
-                'promos.type',
-                'promos.value',
-                DB::raw('count(orders.id_pesanan) as usage_count'),
-                DB::raw("DATE_FORMAT(orders.tanggal_pesan, '%Y-%m') as month_key")
-            )
-            ->whereNotNull('orders.promo_code')
-            ->whereIn('orders.status', ['In Progress','Ready', 'Completed'])
-            ->groupBy('month_key', 'promos.code', 'promos.type', 'promos.value')
-            ->get();
-
-        foreach ($monthlyPromoUsage as $promo) {
-            $monthKey = $promo->month_key;
-            if (!isset($promoReportData[$monthKey])) {
-                $promoReportData[$monthKey] = [];
-            }
-            $promoReportData[$monthKey][] = (object)[
-                'code' => $promo->code,
-                'type' => $promo->type,
-                'value' => $promo->value,
-                'usage_count' => $promo->usage_count
-            ];
+        if (!$report || $report->updated_at->lt(now()->subHour())) {
+            GenerateStaticReportData::dispatchSync();
+            $report = Report::first();
         }
-        $promoReportJsonData = json_encode($promoReportData);
-
-        $userData = User::select(
-            DB::raw('YEAR(created_at) as year'),
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total_users')
-        )
-        ->groupBy('year', 'month')
-        ->orderBy('year', 'desc')
-        ->orderBy('month', 'desc')
-        ->get();
+        
+        $reportData = $report ? $report->toArray() : [];
 
         $sortBy = $request->get('sort_by', 'total_spent');
         $sortDir = $request->get('sort_dir', 'desc');
@@ -84,19 +34,16 @@ class ReportController extends Controller
                      ->whereIn('orders.status', ['In Progress', 'Ready', 'Completed']);
             })
             ->select(
-                'users.id', 
-                'users.name', 
-                'users.email', 
-                DB::raw('COUNT(orders.id_pesanan) as orders_count'), 
+                'users.id',
+                'users.name',
+                'users.email',
+                DB::raw('COUNT(orders.id_pesanan) as orders_count'),
                 DB::raw('COALESCE(SUM(orders.jumlah), 0) as orders_sum_jumlah'),
                 DB::raw('COALESCE(SUM(orders.total), 0) as total_spent')
             );
 
         if ($selectedMonth !== 'all') {
-            $customersQuery->where(function ($query) use ($selectedMonth) {
-                $query->where(DB::raw("DATE_FORMAT(orders.tanggal_pesan, '%Y-%m')"), $selectedMonth)
-                      ->orWhereNull('orders.id_pesanan');
-            });
+            $customersQuery->where(DB::raw("DATE_FORMAT(orders.tanggal_pesan, '%Y-%m')"), $selectedMonth);
         }
 
         $customersQuery->groupBy('users.id', 'users.name', 'users.email')
@@ -104,58 +51,13 @@ class ReportController extends Controller
 
         $topCustomers = $customersQuery->paginate(10)->withQueryString();
 
-        $topCustomersFilterMonths = DB::table('orders')
-            ->select(
-                DB::raw("DATE_FORMAT(tanggal_pesan, '%Y-%m') as month_value"), 
-                DB::raw("DATE_FORMAT(tanggal_pesan, '%M %Y') as month_display")
-            )
-            ->whereIn('status', ['In Progress','Ready', 'Completed'])
-            ->distinct()
-            ->orderBy('month_value', 'desc')
-            ->get();
-
-        $monthlyTopCustomers = DB::table('users')
-            ->join('orders', 'users.id', '=', 'orders.id_user')
-            ->select(
-                'users.id', 
-                'users.name', 
-                'users.email', 
-                DB::raw('COUNT(orders.id_pesanan) as orders_count'), 
-                DB::raw('SUM(orders.jumlah) as orders_sum_jumlah'),
-                DB::raw('SUM(orders.total) as total_spent'),
-                DB::raw("DATE_FORMAT(orders.tanggal_pesan, '%Y-%m') as month_key")
-            )
-            ->whereIn('orders.status', ['In Progress','Ready', 'Completed'])
-            ->groupBy('month_key', 'users.id', 'users.name', 'users.email')
-            ->orderBy('month_key', 'desc')
-            ->orderBy('orders_count', 'desc')
-            ->get();
-        
-        foreach ($monthlyTopCustomers as $customer) {
-            $monthKey = $customer->month_key;
-            if (!isset($topCustomersData[$monthKey])) {
-                $topCustomersData[$monthKey] = [];
-            }
-            if (count($topCustomersData[$monthKey]) < 20) {
-                 $topCustomersData[$monthKey][] = (object)[
-                    'id' => $customer->id,
-                    'name' => $customer->name,
-                    'email' => $customer->email,
-                    'orders_count' => $customer->orders_count,
-                    'orders_sum_jumlah' => $customer->orders_sum_jumlah,
-                    'total_spent' => $customer->total_spent
-                ];
-            }
-        }
-        $topCustomersJsonData = json_encode($topCustomersData);
-
-        return view('admin.report', compact(
-            'salesData', 
-            'promoReportJsonData',
-            'userData', 
-            'topCustomers',
-            'topCustomersFilterMonths'
-        ));
+        return view('admin.report', [
+            'salesData' => collect($reportData['sales_data'] ?? []),
+            'promoReportJsonData' => json_encode($reportData['promo_report_data'] ?? []),
+            'userData' => collect($reportData['user_data'] ?? []),
+            'topCustomers' => $topCustomers,
+            'topCustomersFilterMonths' => collect($reportData['top_customers_filter_months'] ?? []),
+        ]);
     }
 
     public function getMonthlyDetails(Request $request, $year, $month)

@@ -120,15 +120,15 @@
                                     </thead>
                                     <tbody>
                                         @forelse ($salesData as $data)
-                                        <tr class="hover:bg-gray-50 cursor-pointer" @click="getDetails({{ $data->year }}, {{ $data->month }})">
+                                        <tr class="hover:bg-gray-50 cursor-pointer" @click="getDetails({{ $data['year'] }}, {{ $data['month'] }})">
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap font-semibold">{{ date('F Y', mktime(0, 0, 0, $data->month, 1, $data->year)) }}</p>
+                                                <p class="text-gray-900 whitespace-no-wrap font-semibold">{{ date('F Y', mktime(0, 0, 0, $data['month'], 1, $data['year'])) }}</p>
                                             </td>
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">{{ $data->total_orders }}</p>
+                                                <p class="text-gray-900 whitespace-no-wrap">{{ $data['total_orders'] }}</p>
                                             </td>
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">Rp {{ number_format($data->total_sales, 0, ',', '.') }}</p>
+                                                <p class="text-gray-900 whitespace-no-wrap">Rp {{ number_format($data['total_sales'], 0, ',', '.') }}</p>
                                             </td>
                                         </tr>
                                         @empty
@@ -220,12 +220,12 @@
                                     </thead>
                                     <tbody>
                                         @forelse ($userData as $data)
-                                        <tr class="hover:bg-gray-50 cursor-pointer" @click="getUserDetails({{ $data->year }}, {{ $data->month }})">
+                                        <tr class="hover:bg-gray-50 cursor-pointer" @click="getUserDetails({{ $data['year'] }}, {{ $data['month'] }})">
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">{{ date('F Y', mktime(0, 0, 0, $data->month, 1, $data->year)) }}</p>
+                                                <p class="text-gray-900 whitespace-no-wrap">{{ date('F Y', mktime(0, 0, 0, $data['month'], 1, $data['year'])) }}</p>
                                             </td>
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">{{ $data->total_users }}</p>
+                                                <p class="text-gray-900 whitespace-no-wrap">{{ $data['total_users'] }}</p>
                                             </td>
                                         </tr>
                                         @empty
@@ -249,8 +249,8 @@
                                     <select name="month" onchange="this.form.submit()" class="w-full sm:w-48 p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                         <option value="all">All Months</option>
                                         @foreach($topCustomersFilterMonths as $month)
-                                            <option value="{{ $month->month_value }}" {{ request('month') == $month->month_value ? 'selected' : '' }}>
-                                                {{ $month->month_display }}
+                                            <option value="{{ $month['month_value'] }}" {{ request('month') == $month['month_value'] ? 'selected' : '' }}>
+                                                {{ $month['month_display'] }}
                                             </option>
                                         @endforeach
                                     </select>
